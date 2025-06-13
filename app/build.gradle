@@ -1,0 +1,129 @@
+// app/build.gradle (Module: app)
+plugins {
+    id 'com.android.application'
+    // قم بإلغاء التعليق عن السطر التالي فقط إذا كنت تستخدم Kotlin في هذا الموديول
+    // id 'org.jetbrains.kotlin.android'
+    // Dagger Hilt plugin
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    // تحديد الـ namespace للتطبيق، يجب أن يتطابق مع معرف التطبيق (applicationId)
+    // هذا حقل إلزامي في الإصدارات الحديثة من AGP
+    namespace 'com.devpal.newbase'
+    compileSdk 34 // استخدام أحدث SDK للتوافق مع المكتبات الحديثة
+
+    defaultConfig {
+        applicationId "com.devpal.newbase"
+        minSdk 21 // الحد الأدنى لـ SDK للأجهزة
+        targetSdk 34 // استهداف أحدث سلوكيات النظام
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // تحديث خيارات التجميع لـ Java لمعالجة التحذيرات.
+    // يفضل استخدام إصدار أعلى من Java 8، مثل Java 11 أو 17، ليتوافق مع JDK الذي يقوم بالبناء.
+    // سنستخدم 11 لضمان التوافق الأوسع مع أجهزة الأندرويد.
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    // إذا كان مشروعك سيحتوي على ملفات Kotlin، أضف هذه الكتلة:
+    // kotlinOptions {
+    //     // يحدد JVM target لـ Kotlin. يجب أن يتوافق مع sourceCompatibility و targetCompatibility
+    //     jvmTarget = '11'
+    // }
+
+    // تكوينات خاصة Data Binding (إذا كنت تستخدمه)
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    // Android Core & UI Libraries - إصدارات مستقرة ومتوافقة مع compileSdk 34
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    implementation 'androidx.activity:activity:1.8.2'
+    implementation 'androidx.fragment:fragment:1.6.2'
+
+    // Android Lifecycle & LiveData & ViewModel - 2.6.1 هو الأفضل لتجنب التبعيات الجديدة
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-common-java8:2.6.1'
+
+    implementation 'androidx.startup:startup-runtime:1.1.1'
+
+    // Dagger Hilt for Dependency Injection
+    implementation 'com.google.dagger:hilt-android:2.51.1'
+    annotationProcessor 'com.google.dagger:hilt-android-compiler:2.51.1'
+
+    // Networking (Retrofit & OkHttp) - إصدارات مستقرة وشائعة
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // Room Persistence Library (Local Database)
+    implementation 'androidx.room:room-runtime:2.6.1'
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+    // **مهم جدًا**: إضافة تبعية Room لـ RxJava2
+    implementation 'androidx.room:room-rxjava2:2.6.1'
+
+    // Asynchronous Operations (RxJava 2)
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    // Image Loading (Glide) - أحدث إصدار مستقر
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
+    // WorkManager (Background Tasks) - 2.9.0 يتطلب SDK 34، وهو متوفر الآن
+    implementation 'androidx.work:work-runtime:2.9.0'
+
+    // Testing
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+
+    // مكتبات AndroidX الإضافية التي قد تظهر كتبعيات
+    implementation 'androidx.savedstate:savedstate:1.2.1'
+    implementation 'androidx.emoji2:emoji2:1.2.0'
+    implementation 'androidx.emoji2:emoji2-views-helper:1.2.0'
+    implementation 'androidx.transition:transition:1.5.0'
+    implementation 'androidx.core:core-ktx:1.13.0'
+    implementation 'androidx.core:core:1.13.0'
+    implementation 'androidx.profileinstaller:profileinstaller:1.3.0'
+    implementation 'androidx.arch.core:core-runtime:2.2.0'
+    implementation 'androidx.sqlite:sqlite-framework:2.4.0'
+    implementation 'androidx.sqlite:sqlite:2.4.0'
+    implementation 'androidx.annotation:annotation-experimental:1.4.0'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-process:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-core:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-service:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.6.1'
+
+//    لحقل ادخال رقم هاتف
+    implementation 'com.hbb20:ccp:2.5.4'
+
+
+}
